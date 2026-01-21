@@ -8,8 +8,8 @@ if (variable_global_exists("game_over_active") && global.game_over_active) {
 trail_timer++;
 if (trail_timer >= trail_interval && !is_squashing && !is_frozen) {
     trail_timer = 0;
-    // Spawna trail con colore basato su tipo bug
-    create_trail_particle(x, y, trail_color, 2);
+    // Spawna trail con colore basato su tipo bug (più particelle per scia più visibile)
+    create_trail_particle(x, y, trail_color, 3);
 }
 
 // NUOVO: Gestione mini-bug ESPLOSIVI del boss

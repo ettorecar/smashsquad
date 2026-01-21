@@ -13,11 +13,22 @@ if (alpha <= 0) instance_destroy();
 if (is_coloured) {
 	alpha += 0.01;
     color_index += color_speed;
-    if (color_index >= array_length(color_array)) {
-        color_index -= array_length(color_array);
+
+    // FIX: Assicura che color_index rimanga nel range valido
+    var array_size = array_length(color_array);
+    if (color_index >= array_size) {
+        color_index = color_index mod array_size;
     }
-    var color1 = color_array[floor(color_index)];
-    var color2 = color_array[(floor(color_index) + 1) % array_length(color_array)];
+    if (color_index < 0) {
+        color_index += array_size;
+    }
+
+    // Usa modulo per sicurezza extra
+    var index1 = floor(color_index) mod array_size;
+    var index2 = (floor(color_index) + 1) mod array_size;
+
+    var color1 = color_array[index1];
+    var color2 = color_array[index2];
     var blend = color_index - floor(color_index);
     current_color = merge_color(color1, color2, blend);
 } else {
