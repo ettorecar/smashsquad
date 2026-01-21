@@ -166,11 +166,11 @@ if (squash_timer <= 0) {
         // NUOVO: Particelle SPLAT colorate che prendono il colore del bug
         var splat_system = part_system_create();
         part_system_depth(splat_system, -100);
-        
+
         var splat_particle = part_type_create();
-        part_type_shape(splat_particle, pt_shape_circle);
-        part_type_size(splat_particle, 0.1, 0.3, -0.01, 0);
-        
+        part_type_shape(splat_particle, pt_shape_flare);
+        part_type_size(splat_particle, 0.06, 0.12, -0.004, 0); // Più piccole, shrink graduale
+
         // ESTRAE il colore dominante dello sprite del bug
         var bug_color = c_white; // Default
         // Prova a campionare il colore centrale dello sprite
@@ -195,20 +195,20 @@ if (squash_timer <= 0) {
             ];
             bug_color = color_choices[irandom(array_length(color_choices) - 1)];
         }
-        
+
         part_type_color1(splat_particle, bug_color);
-        part_type_alpha3(splat_particle, 1, 0.8, 0);
-        part_type_speed(splat_particle, 4, 8, -0.2, 0);
+        part_type_alpha3(splat_particle, 0.9, 0.6, 0); // Fade più pronunciato
+        part_type_speed(splat_particle, 6, 14, -0.4, 0); // Schizzano veloci, rallentano molto
         part_type_direction(splat_particle, 0, 360, 0, 0);
-        part_type_gravity(splat_particle, 0.2, 270); // Cadono leggermente
-        part_type_life(splat_particle, 15, 30);
-        
+        part_type_gravity(splat_particle, 0.15, 270); // Gravità ridotta
+        part_type_life(splat_particle, 12, 24); // Vita più breve
+
         // Più particelle per perfect tap!
-        var particle_count = 20;
+        var particle_count = 15; // Ridotto da 20 per evitare sovrapposizioni
         if (variable_instance_exists(id, "is_perfect") && is_perfect) {
-            particle_count = 40; // Doppio splat per perfect!
+            particle_count = 30; // Ridotto da 40
         }
-        
+
         part_particles_create(splat_system, x, y, splat_particle, particle_count);
         
         // Cleanup particelle
