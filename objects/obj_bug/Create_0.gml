@@ -436,21 +436,6 @@ if (bug_type == "poisonous" && is_poisonous_now && !is_perfect &&
                 break;
             }
         }
-        
-// PERFECT TAP: Controlla se tap è al centro del bug
-var tap_x = 0;
-var tap_y = 0;
-var found_tap = false;
-
-// Trova coordinate del tap
-for (var i = 0; i < 5; i++) {
-    if (device_mouse_check_button_pressed(i, mb_left)) {
-        tap_x = device_mouse_x(i);
-        tap_y = device_mouse_y(i);
-        found_tap = true;
-        break;
-    }
-}
 
 		// Calcola se è perfect (entro 50% del raggio del bug)
 		if (found_tap) {
