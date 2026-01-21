@@ -28,10 +28,12 @@ if (is_shielded) {
 is_shrink = false;
 bug_points_multiplier = 1;
 
-// TRAIL MOVIMENTO: Timer per spawnareparticelle trail
+// TRAIL MOVIMENTO: Timer per spawnare particelle trail
 trail_timer = 0;
 trail_interval = 3; // Spawna trail ogni 3 frame
 trail_color = c_white; // Colore default, verrà cambiato per bug speciali
+previous_x = x; // Posizione precedente X per trail
+previous_y = y; // Posizione precedente Y per trail
 
 // Mini-bug spawned da boss
 is_boss_minibug = false;
@@ -532,17 +534,9 @@ if (bug_type == "poisonous" && is_poisonous_now && !is_perfect &&
                     audio_play_sound(snd_combo_up, 1, false, 0.7, 0, combo_pitch);
                 });
 
-                // NUOVO: EFFETTI VISIVI COMBO UP!
+                // NUOVO: EFFETTI VISIVI COMBO UP! (solo particelle + shake, no badge ridondante)
                 var combo_x = room_width / 2;
                 var combo_y = room_height / 4;
-
-                // Badge COMBO gigante
-                var combo_badge = instance_create_layer(combo_x, combo_y, "Instances", obj_score_text);
-                combo_badge.text = "COMBO x" + string(global.combo_multiplier) + "!";
-                combo_badge.target_y = combo_y - 60;
-                combo_badge.is_coloured = true; // Arcobaleno
-                combo_badge.scale = 2.5 + (global.combo_multiplier * 0.2); // Scala con combo
-                combo_badge.lifetime = 90; // Durata maggiore
 
                 // Particelle esplosive combo
                 var combo_particles = part_system_create();
