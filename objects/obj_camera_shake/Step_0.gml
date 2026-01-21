@@ -2,9 +2,12 @@
 
 if (shake_timer > 0) {
     shake_timer--;
-    
-    // Calcola shake con decay
-    var shake_power = (shake_timer / shake_duration) * shake_magnitude * shake_magniture_multiplier;
+
+    // Calcola shake con decay (con protezione division by zero)
+    var shake_power = 0;
+    if (shake_duration > 0) {
+        shake_power = (shake_timer / shake_duration) * shake_magnitude * shake_magnitude_multiplier;
+    }
     
     // Offset casuale
     var shake_x = random_range(-shake_power, shake_power);

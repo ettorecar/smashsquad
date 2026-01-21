@@ -1,5 +1,8 @@
 /// obj_game_controller Room End Event (Other_3)
 
+// FIX: Ferma tutti gli audio in loop (musica, allarmi, ecc.)
+audio_stop_all();
+
 // FIX: Verifica che le strutture esistano prima di distruggerle
 
 // Libera la memoria usata dalla configurazione dei boss

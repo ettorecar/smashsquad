@@ -325,17 +325,10 @@ if (bug_type == "poisonous" && is_poisonous_now && !is_perfect &&
             
             // Esplosione visiva - FIX MEMORY LEAK con oggetto temporaneo
             audio_play_sound(snd_explosion, 1, false);
-            
+
             // SCREEN SHAKE: Esplosione più decisa
             shake_screen(7, 15);
-			
-			
-			// Esplosione visiva - FIX MEMORY LEAK con oggetto temporaneo
-            audio_play_sound(snd_explosion, 1, false);
-            
-            // SCREEN SHAKE: Esplosione più decisa
-            shake_screen(7, 15);
-            
+
             // CERCHIO ESPLOSIONE VISIBILE (AREA 300px)
             var blast_system = part_system_create();
             part_system_depth(blast_system, -99);
@@ -366,10 +359,7 @@ if (bug_type == "poisonous" && is_poisonous_now && !is_perfect &&
             blast_cleaner.particle_system_to_clean = blast_system;
             blast_cleaner.particle_type_to_clean = ring_particle;
             blast_cleaner.alarm[0] = game_get_speed(gamespeed_fps);
-            
-            var exp_system = part_system_create();
-            part_system_depth(exp_system, -100);
-            
+
             var exp_system = part_system_create();
             part_system_depth(exp_system, -100);
             

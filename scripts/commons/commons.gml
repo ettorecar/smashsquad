@@ -17,8 +17,11 @@ function resize_screen() {
         display_height = temp;
     }
 
-    
-    var aspect_ratio = display_width / display_height;
+    // Calcola aspect ratio con protezione division by zero
+    var aspect_ratio = 16/9; // Default fallback
+    if (display_height > 0) {
+        aspect_ratio = display_width / display_height;
+    }
     var target_ratio = 16/9;
     var threshold_long = 1.1; // Soglia (rispetto a 16/9) per considerare uno schermo "lungo"
     var threshold_narrow = 1.35; // Soglia (rispetto ai 4/3) per considerare uno schermo più stretto di 4:3

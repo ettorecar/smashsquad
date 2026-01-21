@@ -5,9 +5,9 @@ shake_duration = 0;
 shake_timer = 0;
 // Shake più forte su mobile (touch meno preciso = più feedback)
 if (os_type == os_android || os_type == os_ios) {
-    shake_magniture_multiplier = 3; // Mobile: 3x (più intenso)
+    shake_magnitude_multiplier = 3; // Mobile: 3x (più intenso)
 } else {
-    shake_magniture_multiplier = 2; // Desktop: 2x (normale)
+    shake_magnitude_multiplier = 2; // Desktop: 2x (normale)
 }
 
 // FIX: Inizializza subito posizione camera
