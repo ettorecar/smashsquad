@@ -1,6 +1,7 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 
+// TEST COMMENTO - Questo commento è stato aggiunto da Claude per testare la sincronizzazione con GitHub
 
 
 function resize_screen() {
