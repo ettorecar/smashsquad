@@ -2,6 +2,7 @@
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 
 // TEST COMMENTO - Questo commento è stato aggiunto da Claude per testare la sincronizzazione con GitHub
+// SECONDO TEST - Questo è un secondo commento per ulteriore verifica della sincronizzazione
 
 
 function resize_screen() {
