@@ -28,13 +28,6 @@ if (is_shielded) {
 is_shrink = false;
 bug_points_multiplier = 1;
 
-// TRAIL MOVIMENTO: Timer per spawnare particelle trail
-trail_timer = 0;
-trail_interval = 3; // Spawna trail ogni 3 frame
-trail_color = c_white; // Colore default, verrà cambiato per bug speciali
-previous_x = x; // Posizione precedente X per trail
-previous_y = y; // Posizione precedente Y per trail
-
 // Mini-bug spawned da boss
 is_boss_minibug = false;
 parent_boss = noone;
@@ -59,19 +52,16 @@ if (special_chance < 0.025 && !is_shielded) {
     bug_type = "explosive";
     explosion_timer = game_get_speed(gamespeed_fps) * random_range(8, 12);
     explosion_warning = false;
-    trail_color = c_orange; // Trail arancione
 } else if (special_chance < 0.045 && !is_shielded) {
     // Invisibile: 2%
     bug_type = "invisible";
     invisible_timer = 0;
     invisible_state = true;
     invisible_alpha = 0;
-    trail_color = make_color_rgb(200, 200, 255); // Trail azzurro pallido
 } else if (special_chance < 0.095 && !is_shielded) {  // ← CAMBIATO: da 0.065 a 0.095
     // Divisore: 5% (era 2%)
     bug_type = "divider";
     is_split_bug = false;
-    trail_color = c_purple; // Trail viola
 } else if (special_chance < 0.13 && !is_shielded) {  // ← CAMBIATO: da 0.10 a 0.13
     // Velenoso: 3.5%
     bug_type = "poisonous";
@@ -80,7 +70,6 @@ if (special_chance < 0.025 && !is_shielded) {
     is_poisonous_now = true;
     poison_safe_duration = game_get_speed(gamespeed_fps) * 2;
     poison_cycle_timer = poison_phase_duration + poison_safe_duration;
-    trail_color = c_lime; // Trail verde
 } else if (special_chance < 0.18 && !is_shielded) {  // ← CAMBIATO: da 0.15 a 0.18
     // Evasivo: 5%
     bug_type = "evasive";
@@ -88,7 +77,6 @@ if (special_chance < 0.025 && !is_shielded) {
     can_be_killed = false;
     evasive_dodge_count = 0; // NUOVO: Conta le schivate
     evasive_max_dodges = 4;  // Dopo 4 schivate diventa normale
-    trail_color = c_yellow; // Trail giallo
 }
 
 

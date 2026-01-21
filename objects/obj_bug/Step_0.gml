@@ -4,25 +4,6 @@ if (variable_global_exists("game_over_active") && global.game_over_active) {
     exit;
 }
 
-// TRAIL MOVIMENTO: Spawna particelle DIETRO al bug (non al centro)
-trail_timer++;
-if (trail_timer >= trail_interval && !is_squashing && !is_frozen) {
-    trail_timer = 0;
-
-    // Calcola distanza per verificare se il bug si è mosso
-    var distance_moved = point_distance(x, y, previous_x, previous_y);
-
-    // Spawna trail solo se il bug si è mosso (evita accumulo quando fermo)
-    if (distance_moved > 2) {
-        // Spawna trail nella posizione precedente (dove il bug ERA)
-        create_trail_particle(previous_x, previous_y, trail_color, 3);
-    }
-
-    // Aggiorna posizione precedente
-    previous_x = x;
-    previous_y = y;
-}
-
 // NUOVO: Gestione mini-bug ESPLOSIVI del boss
 if (is_boss_minibug_explosive && !minibug_exploded) {
     explosive_minibug_timer--;
@@ -379,21 +360,10 @@ if (bug_type == "poisonous") {
     }
 }
 
-// BUG EVASIVO: Cooldown schivata + scia gialla
+// BUG EVASIVO: Cooldown schivata
     if (bug_type == "evasive") {
         if (dodge_cooldown > 0) {
             dodge_cooldown--;
-        }
-        
-		// Scia gialla continua per identificarlo
-        if (!variable_instance_exists(id, "evasive_trail_timer")) {
-            evasive_trail_timer = 0;
-        }
-        
-        evasive_trail_timer++;
-        if (evasive_trail_timer >= 3) {
-            evasive_trail_timer = 0;
-            create_trail_particle(x, y, c_yellow, 2);
         }
     }
 
