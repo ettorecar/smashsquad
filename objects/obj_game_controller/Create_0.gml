@@ -143,7 +143,6 @@ switch(global.difficulty) {
 }
 
 // Configurazione dei boss (UNICA VERSIONE CORRETTA)
-// Configurazione dei boss (UNICA VERSIONE CORRETTA)
 global.boss_configurations = ds_map_create();
 for (var i = 1; i <= 20; i++) {
     var boss_data = ds_map_create();

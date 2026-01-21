@@ -64,7 +64,13 @@ if (!was_tapped) {
                 part_type_life(particle_type, 20, 40);
                 
                 part_particles_create(particle_system, x, y, particle_type, 30);
-                
+
+                // Cleanup particelle
+                var cleaner = instance_create_depth(0, 0, -10000, obj_particle_cleaner);
+                cleaner.particle_system_to_clean = particle_system;
+                cleaner.particle_type_to_clean = particle_type;
+                cleaner.alarm[0] = game_get_speed(gamespeed_fps) * 2;
+
                 // Distruggi UFO
                 instance_destroy();
                 break;
