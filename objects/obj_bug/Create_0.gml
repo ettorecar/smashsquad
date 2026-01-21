@@ -198,9 +198,10 @@ function destroy_bug() {
                         // Feedback visivo/audio conversione
                         audio_play_sound(snd_pop, 1, false, 0.6, 0, 0.8); // Pitch basso
                     }
-                    
+
                     // Audio schivata
-                    audio_play_sound(snd_dodge, 1, false, 0.8);
+                    var pitch = random_range(0.85, 1.15); // ±15% variazione (drammatico)
+                    audio_play_sound(snd_dodge, 1, false, 0.8, 0, pitch);
                     
 					// Particelle schivata MOLTO PIÙ EVIDENTI
                     var dodge_system = part_system_create();
@@ -255,7 +256,8 @@ if (bug_type == "poisonous" && is_poisonous_now && !is_perfect &&
             warning_text.scale = 3.0; // GIGANTE!
             
             // Audio errore grave
-            audio_play_sound(snd_broken_shield, 1, false, 0.8);
+            var pitch = random_range(0.9, 1.1); // ±10% variazione
+            audio_play_sound(snd_broken_shield, 1, false, 0.8, 0, pitch);
             
             // Shake forte
             shake_screen(7, 20);
@@ -287,7 +289,8 @@ if (bug_type == "poisonous" && is_poisonous_now && !is_perfect &&
 	
     if (is_shielded) {
         is_shielded = false;
-        audio_play_sound(snd_broken_shield, 1, false, 4);
+        var pitch = random_range(0.9, 1.1); // ±10% variazione
+        audio_play_sound(snd_broken_shield, 1, false, 4, 0, pitch);
 		
 		 // SCREEN SHAKE: Rottura scudo
          shake_screen(5, 12);
@@ -311,7 +314,8 @@ if (bug_type == "poisonous" && is_poisonous_now && !is_perfect &&
                     if (dist < explosion_radius) {
                         if (is_shielded) {
                             is_shielded = false;
-                            audio_play_sound(snd_broken_shield, 1, false, 4);
+                            var pitch = random_range(0.9, 1.1); // ±10% variazione
+                            audio_play_sound(snd_broken_shield, 1, false, 4, 0, pitch);
                         } else {
                             destroy_bug();
                         }
@@ -414,8 +418,9 @@ if (bug_type == "poisonous" && is_poisonous_now && !is_perfect &&
                     is_boss_minibug = false;
                 }
             }
-            
-            audio_play_sound(snd_pop_divide, 1, false, 0.8);
+
+            var pitch = random_range(0.9, 1.2); // ±15% variazione
+            audio_play_sound(snd_pop_divide, 1, false, 0.8, 0, pitch);
         }
         
 		// NUOVO: Inizia animazione squash invece di distruggere subito
@@ -540,7 +545,8 @@ if (bug_type == "poisonous" && is_poisonous_now && !is_perfect &&
                 image_blend = c_aqua;
 				blue_flash_timer = game_get_speed(gamespeed_fps) * 1; // 1 secondo
 				// Audio danno doppio al boss
-                audio_play_sound(snd_boss_hit, 1, false, 1.0);
+                var pitch = random_range(0.95, 1.05); // ±5% variazione (sottile per boss)
+                audio_play_sound(snd_boss_hit, 1, false, 1.0, 0, pitch);
                 
                 // Testo danno VERDE (positivo per giocatore)
                 var damage_text = instance_create_layer(x, y - 50, "Instances", obj_score_text);
@@ -600,7 +606,8 @@ if (bug_type == "poisonous" && is_poisonous_now && !is_perfect &&
                 boss_health--;
                 damage_effect = 0.5;
 				// Audio hit boss
-                audio_play_sound(snd_lightbulb, 1, false);
+                var pitch = random_range(0.95, 1.15); // ±10% variazione
+                audio_play_sound(snd_lightbulb, 1, false, 1, 0, pitch);
                 
                 var damage_text = instance_create_layer(x, y - 30, "Instances", obj_score_text);
                 damage_text.text = "-1 HP";
@@ -662,7 +669,8 @@ if (bug_type == "poisonous" && is_poisonous_now && !is_perfect &&
 		// PITCH COMBO: Aumenta pitch con combo (1.0 a 1.5) - SOLO se NON perfect
 		if (!is_perfect) {
 		    var combo_pitch = 1.0 + (min(global.combo_multiplier - 1, 5) * 0.1);
-		    audio_play_sound(snd_pop, 1, false, 1, 0, combo_pitch);
+		    var random_variation = random_range(-0.05, 0.05); // ±5% variazione
+		    audio_play_sound(snd_pop, 1, false, 1, 0, combo_pitch + random_variation);
 		}
 
 		// SCREEN SHAKE: Bug normale - via di mezzo (SOLO se NON è esplosivo)
