@@ -92,7 +92,21 @@ function device_resize(){
     
 	// Forza l'orientamento landscape
 	//display_set_orientation(display_landscape);
-	
 
+
+}
+
+/// Calcola scala dinamica per numeri danno basata sul valore punti
+/// @param {real} points Il valore dei punti da mostrare
+/// @return {real} La scala del testo (1.0 = normale, 2.0 = doppio, etc.)
+function get_dynamic_score_scale(points) {
+    // Scala base: 1.0
+    // Ogni 100 punti aggiunge 0.15 alla scala
+    // Scala minima: 0.6, Scala massima: 3.5
+    var base_scale = 0.8;
+    var scale_per_100pts = 0.15;
+
+    var calculated_scale = base_scale + (points / 100) * scale_per_100pts;
+    return clamp(calculated_scale, 0.6, 3.5);
 }
 

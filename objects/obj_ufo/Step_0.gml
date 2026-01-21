@@ -49,7 +49,7 @@ if (!was_tapped) {
                 bonus_text.text = "+" + string(bonus_points) + "!";
                 bonus_text.target_y = y - 80;
                 bonus_text.is_coloured = true; // Arcobaleno
-                bonus_text.scale = 1.5; // Grande
+                bonus_text.scale = get_dynamic_score_scale(bonus_points); // SCALA DINAMICA!
                 
                 // Particelle esplosione oro
                 var particle_system = part_system_create();

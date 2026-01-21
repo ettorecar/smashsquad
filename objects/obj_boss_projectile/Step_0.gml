@@ -60,7 +60,7 @@ if (!was_touched) {
                     damage_text.target_y = y - 80;
                     damage_text.is_coloured = false;
                     damage_text.current_color = c_red;
-                    damage_text.scale = 1.8; // PIÙ GRANDE per enfatizzare
+                    damage_text.scale = get_dynamic_score_scale(1000); // SCALA DINAMICA!
                     
                     // Shake forte per errore grave
                     shake_screen(6, 20);

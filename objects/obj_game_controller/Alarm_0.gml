@@ -41,6 +41,7 @@ if (insects_to_spawn > 0) {
             is_shielded = false;
             move_speed *= 3; // VELOCISSIMO
             points = 1000; // MEGA PUNTI
+            trail_color = c_yellow; // Trail dorato
             
             // Feedback audio spawn
             audio_play_sound(snd_ufo_bonus, 1, false, 1.5); // Suono speciale

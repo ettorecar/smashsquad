@@ -207,5 +207,16 @@ if (global.powerup_2x_active && !instance_exists(obj_boss) && !global.game_over_
     // Reset
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
+}
+
+// SCREEN FLASH: Disegna fullscreen overlay
+if (global.screen_flash_active && global.screen_flash_alpha > 0) {
+    draw_set_alpha(global.screen_flash_alpha);
+    draw_set_color(global.screen_flash_color);
+    draw_rectangle(0, 0, display_get_gui_width(), display_get_gui_height(), false);
+
+    // Reset
+    draw_set_alpha(1);
+    draw_set_color(c_white);
     draw_set_color(c_white);
 }

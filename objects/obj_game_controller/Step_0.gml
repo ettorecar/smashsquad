@@ -1,5 +1,14 @@
 /// obj_game_controller Step Event
 
+// SCREEN FLASH: Gestisci fade
+if (global.screen_flash_active) {
+    global.screen_flash_alpha -= global.screen_flash_fade_speed;
+    if (global.screen_flash_alpha <= 0) {
+        global.screen_flash_active = false;
+        global.screen_flash_alpha = 0;
+    }
+}
+
 // FIX: Se game over è attivo, blocca tutti gli spawn e timer
 if (variable_global_exists("game_over_active") && global.game_over_active) {
     exit;
@@ -114,6 +123,9 @@ if (global.powerup_2x_active) {
         
 	        // Shake celebrativo
 	        shake_screen(8, 25);
+
+	        // FLASH SCREEN celebrativo (giallo)
+	        flash_screen(c_yellow, 0.5, 0.04);
 	    }
 	}
 }
@@ -284,7 +296,10 @@ if (boss_defeated) {
     }
     
     level++;
-    
+
+    // FLASH SCREEN: Verde per level up
+    flash_screen(c_lime, 0.4, 0.06);
+
     // ENDLESS MODE: Dopo livello 10, continua all'infinito
     if (level > 10) {
         var endless_level = level - 10;

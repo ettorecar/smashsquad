@@ -28,6 +28,11 @@ if (is_shielded) {
 is_shrink = false;
 bug_points_multiplier = 1;
 
+// TRAIL MOVIMENTO: Timer per spawnareparticelle trail
+trail_timer = 0;
+trail_interval = 3; // Spawna trail ogni 3 frame
+trail_color = c_white; // Colore default, verrà cambiato per bug speciali
+
 // Mini-bug spawned da boss
 is_boss_minibug = false;
 parent_boss = noone;
@@ -52,16 +57,19 @@ if (special_chance < 0.025 && !is_shielded) {
     bug_type = "explosive";
     explosion_timer = game_get_speed(gamespeed_fps) * random_range(8, 12);
     explosion_warning = false;
+    trail_color = c_orange; // Trail arancione
 } else if (special_chance < 0.045 && !is_shielded) {
     // Invisibile: 2%
     bug_type = "invisible";
     invisible_timer = 0;
     invisible_state = true;
     invisible_alpha = 0;
+    trail_color = make_color_rgb(200, 200, 255); // Trail azzurro pallido
 } else if (special_chance < 0.095 && !is_shielded) {  // ← CAMBIATO: da 0.065 a 0.095
     // Divisore: 5% (era 2%)
     bug_type = "divider";
     is_split_bug = false;
+    trail_color = c_purple; // Trail viola
 } else if (special_chance < 0.13 && !is_shielded) {  // ← CAMBIATO: da 0.10 a 0.13
     // Velenoso: 3.5%
     bug_type = "poisonous";
@@ -70,6 +78,7 @@ if (special_chance < 0.025 && !is_shielded) {
     is_poisonous_now = true;
     poison_safe_duration = game_get_speed(gamespeed_fps) * 2;
     poison_cycle_timer = poison_phase_duration + poison_safe_duration;
+    trail_color = c_lime; // Trail verde
 } else if (special_chance < 0.18 && !is_shielded) {  // ← CAMBIATO: da 0.15 a 0.18
     // Evasivo: 5%
     bug_type = "evasive";
@@ -77,6 +86,7 @@ if (special_chance < 0.025 && !is_shielded) {
     can_be_killed = false;
     evasive_dodge_count = 0; // NUOVO: Conta le schivate
     evasive_max_dodges = 4;  // Dopo 4 schivate diventa normale
+    trail_color = c_yellow; // Trail giallo
 }
 
 
@@ -515,12 +525,46 @@ if (bug_type == "poisonous" && is_poisonous_now && !is_perfect &&
             // Audio combo up quando aumenta moltiplicatore (DELAY inline)
             if (global.combo_multiplier > old_multiplier) {
                 var pitch = 1.0 + (global.combo_multiplier - 1) * 0.1;
-                
+
                 // Delay di 0.15 secondi usando call_later
                 call_later(9, time_source_units_frames, function() {
                     var combo_pitch = 1.0 + (global.combo_multiplier - 1) * 0.1;
                     audio_play_sound(snd_combo_up, 1, false, 0.7, 0, combo_pitch);
                 });
+
+                // NUOVO: EFFETTI VISIVI COMBO UP!
+                var combo_x = room_width / 2;
+                var combo_y = room_height / 4;
+
+                // Badge COMBO gigante
+                var combo_badge = instance_create_layer(combo_x, combo_y, "Instances", obj_score_text);
+                combo_badge.text = "COMBO x" + string(global.combo_multiplier) + "!";
+                combo_badge.target_y = combo_y - 60;
+                combo_badge.is_coloured = true; // Arcobaleno
+                combo_badge.scale = 2.5 + (global.combo_multiplier * 0.2); // Scala con combo
+                combo_badge.lifetime = 90; // Durata maggiore
+
+                // Particelle esplosive combo
+                var combo_particles = part_system_create();
+                part_system_depth(combo_particles, -200);
+
+                var combo_star = part_type_create();
+                part_type_shape(combo_star, pt_shape_star);
+                part_type_size(combo_star, 0.4, 0.9, -0.03, 0);
+                part_type_color3(combo_star, c_yellow, c_orange, c_lime);
+                part_type_alpha3(combo_star, 1, 0.8, 0);
+                part_type_speed(combo_star, 5, 10, -0.2, 0);
+                part_type_direction(combo_star, 0, 360, 0, 0);
+                part_type_life(combo_star, 30, 50);
+
+                var num_particles = 20 + (global.combo_multiplier * 5); // Più combo = più particelle
+                part_particles_create(combo_particles, combo_x, combo_y, combo_star, num_particles);
+
+                create_particle_cleaner(combo_particles, combo_star, game_get_speed(gamespeed_fps) * 2);
+
+                // Screen shake proporzionale al combo
+                var shake_intensity = 3 + global.combo_multiplier;
+                shake_screen(min(shake_intensity, 8), 15);
             }
         }
 
@@ -575,6 +619,9 @@ if (bug_type == "poisonous" && is_poisonous_now && !is_perfect &&
                     
                     // SCREEN SHAKE: MEGA per morte boss
                     shake_screen(9, 30);
+
+                    // FLASH SCREEN: Bianco intenso per vittoria boss
+                    flash_screen(c_white, 0.8, 0.03);
                     
                     if (instance_exists(obj_game_controller)) {
                         obj_game_controller.player_score += boss_points;
@@ -614,6 +661,9 @@ if (bug_type == "poisonous" && is_poisonous_now && !is_perfect &&
                     
                     // SCREEN SHAKE: MEGA per morte boss
                     shake_screen(9, 30);
+
+                    // FLASH SCREEN: Bianco intenso per vittoria boss
+                    flash_screen(c_white, 0.8, 0.03);
                     
 					if (instance_exists(obj_game_controller)) {
 					                    obj_game_controller.player_score += boss_points;

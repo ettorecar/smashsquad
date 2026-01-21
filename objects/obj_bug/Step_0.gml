@@ -4,6 +4,14 @@ if (variable_global_exists("game_over_active") && global.game_over_active) {
     exit;
 }
 
+// TRAIL MOVIMENTO: Spawna particelle trail mentre il bug si muove
+trail_timer++;
+if (trail_timer >= trail_interval && !is_squashing && !is_frozen) {
+    trail_timer = 0;
+    // Spawna trail con colore basato su tipo bug
+    create_trail_particle(x, y, trail_color, 2);
+}
+
 // NUOVO: Gestione mini-bug ESPLOSIVI del boss
 if (is_boss_minibug_explosive && !minibug_exploded) {
     explosive_minibug_timer--;
@@ -221,6 +229,7 @@ if (squash_timer <= 0) {
         score_text.text = "+" + string(points);
         score_text.target_y = y - sprite_height/2;
         score_text.is_coloured = false;
+        score_text.scale = get_dynamic_score_scale(points); // SCALA DINAMICA!
         
         score_text.x = clamp(x, sprite_get_width(spr_explosion)/2, room_width - sprite_get_width(spr_explosion)/2);
         score_text.y = clamp(y, sprite_get_height(spr_explosion)/2, room_height - sprite_get_height(spr_explosion)/2);
@@ -402,7 +411,7 @@ if (bug_type == "poisonous") {
 	            penalty_text.target_y = explosion_y - 60;
 	            penalty_text.is_coloured = false;
 	            penalty_text.current_color = c_red;
-	            penalty_text.scale = 1.2;
+	            penalty_text.scale = get_dynamic_score_scale(300); // SCALA DINAMICA!
 	        }
 			
 			// CERCHIO ESPLOSIONE VISIBILE

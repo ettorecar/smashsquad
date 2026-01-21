@@ -2,6 +2,12 @@
 
 randomize();
 
+// SCREEN FLASH SYSTEM
+global.screen_flash_active = false;
+global.screen_flash_alpha = 0;
+global.screen_flash_color = c_white;
+global.screen_flash_fade_speed = 0.05;
+
 // ANDROID: Timer per double back to exit
 back_press_timer = 0;
 

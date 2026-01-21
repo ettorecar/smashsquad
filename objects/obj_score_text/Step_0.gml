@@ -1,6 +1,11 @@
 // Step Event
+// Calcola fade_speed basato su lifetime (se modificato dall'esterno)
+if (lifetime != 50) {
+    fade_speed = 1.0 / lifetime;
+}
+
 y = lerp(y, target_y, 0.1); // Movimento fluido verso l'alto
-alpha -= 0.02; // Dissolvenza graduale
+alpha -= fade_speed; // Dissolvenza graduale (usa fade_speed)
 scale += 0.008; // Leggero ingrandimento
 if (alpha <= 0) instance_destroy();
 

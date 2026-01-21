@@ -4,6 +4,8 @@ text = "";
 alpha = 1.0; // FIX BUG 14: Era 1.1, ora 1.0 (valore corretto)
 scale = 1;
 target_y = y - 50;
+lifetime = 50; // Default: 50 frame (~0.83s a 60fps)
+fade_speed = 0.02; // Velocità dissolvenza (calcolata da lifetime)
 
 is_coloured = false;
 color_index = 0;
