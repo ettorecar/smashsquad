@@ -169,7 +169,7 @@ if (squash_timer <= 0) {
 
         var splat_particle = part_type_create();
         part_type_shape(splat_particle, pt_shape_circle);
-        part_type_size(splat_particle, 0.08, 0.15, -0.003, 0); // Gocce distinte
+        part_type_size(splat_particle, 0.15, 0.25, -0.002, 0); // Dimensione sostanziale, shrink minimo
 
         // ESTRAE il colore dominante dello sprite del bug
         var bug_color = c_white; // Default
@@ -197,16 +197,16 @@ if (squash_timer <= 0) {
         }
 
         part_type_color1(splat_particle, bug_color);
-        part_type_alpha3(splat_particle, 0.85, 0.5, 0); // Fade pronunciato
-        part_type_speed(splat_particle, 10, 22, -0.7, 0); // Schizzano molto veloci, frenano bruscamente
+        part_type_alpha3(splat_particle, 0.8, 0.5, 0); // Fade graduale
+        part_type_speed(splat_particle, 15, 30, -0.3, 0); // Velocissime, decelerazione graduale per dispersione ampia
         part_type_direction(splat_particle, 0, 360, 0, 0);
-        part_type_gravity(splat_particle, 0.1, 270); // Gravità minima
-        part_type_life(splat_particle, 10, 18); // Vita breve per macchie distinte
+        part_type_gravity(splat_particle, 0.05, 270); // Gravità minima per mantenere dispersione radiale
+        part_type_life(splat_particle, 18, 28); // Vita più lunga per coprire più area
 
         // Più particelle per perfect tap!
-        var particle_count = 12; // Ridotto per evitare sovraffollamento
+        var particle_count = 15; // Aumentato per coprire più area
         if (variable_instance_exists(id, "is_perfect") && is_perfect) {
-            particle_count = 20; // Ridotto per macchie più distinte
+            particle_count = 25; // Aumentato per splat più drammatico
         }
 
         part_particles_create(splat_system, x, y, splat_particle, particle_count);
