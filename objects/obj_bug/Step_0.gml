@@ -209,7 +209,14 @@ if (squash_timer <= 0) {
             particle_count = 25; // Aumentato per splat più drammatico
         }
 
-        part_particles_create(splat_system, x, y, splat_particle, particle_count);
+        // SPAWN SEPARATO: ogni particella parte da posizione offset per evitare sovrapposizione
+        for (var i = 0; i < particle_count; i++) {
+            var angle = (360 / particle_count) * i + random_range(-15, 15); // Distribuzione radiale con variazione
+            var offset_distance = random_range(5, 20); // Offset iniziale dal centro
+            var spawn_x = x + lengthdir_x(offset_distance, angle);
+            var spawn_y = y + lengthdir_y(offset_distance, angle);
+            part_particles_create(splat_system, spawn_x, spawn_y, splat_particle, 1);
+        }
         
         // Cleanup particelle
         var splat_cleaner = instance_create_depth(0, 0, -10000, obj_particle_cleaner);
