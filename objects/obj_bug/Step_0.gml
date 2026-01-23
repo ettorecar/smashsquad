@@ -169,7 +169,7 @@ if (squash_timer <= 0) {
 
         var splat_particle = part_type_create();
         part_type_shape(splat_particle, pt_shape_circle);
-        part_type_size(splat_particle, 0.13, 0.17, -0.0008, 0); // Range stretto, transizione graduale
+        part_type_size(splat_particle, 0.35, 0.45, -0.004, 0); // MACCHIE GRANDI ~40px, shrink visibile
 
         // ESTRAE il colore dominante dello sprite del bug
         var bug_color = c_white; // Default
@@ -197,22 +197,22 @@ if (squash_timer <= 0) {
         }
 
         part_type_color1(splat_particle, bug_color);
-        part_type_alpha3(splat_particle, 0.8, 0.5, 0); // Fade graduale
-        part_type_speed(splat_particle, 15, 30, -0.3, 0); // Velocissime, decelerazione graduale per dispersione ampia
+        part_type_alpha3(splat_particle, 0.75, 0.45, 0); // Fade più marcato
+        part_type_speed(splat_particle, 18, 35, -0.4, 0); // Veloci, frenano bruscamente
         part_type_direction(splat_particle, 0, 360, 0, 0);
-        part_type_gravity(splat_particle, 0.05, 270); // Gravità minima per mantenere dispersione radiale
-        part_type_life(splat_particle, 18, 28); // Vita più lunga per coprire più area
+        part_type_gravity(splat_particle, 0.08, 270); // Gravità leggermente maggiore
+        part_type_life(splat_particle, 15, 22); // Vita più breve, sono già grandi e visibili
 
         // Più particelle per perfect tap!
-        var particle_count = 15; // Aumentato per coprire più area
+        var particle_count = 12; // Ridotto, sono più grandi
         if (variable_instance_exists(id, "is_perfect") && is_perfect) {
-            particle_count = 25; // Aumentato per splat più drammatico
+            particle_count = 18; // Perfect = più macchie
         }
 
         // SPAWN SEPARATO: ogni particella parte da posizione offset per evitare sovrapposizione
         for (var i = 0; i < particle_count; i++) {
-            var angle = (360 / particle_count) * i + random_range(-15, 15); // Distribuzione radiale con variazione
-            var offset_distance = random_range(5, 20); // Offset iniziale dal centro
+            var angle = (360 / particle_count) * i + random_range(-20, 20); // Variazione maggiore
+            var offset_distance = random_range(30, 60); // OFFSET GRANDE proporzionale a bug 200px
             var spawn_x = x + lengthdir_x(offset_distance, angle);
             var spawn_y = y + lengthdir_y(offset_distance, angle);
             part_particles_create(splat_system, spawn_x, spawn_y, splat_particle, 1);
