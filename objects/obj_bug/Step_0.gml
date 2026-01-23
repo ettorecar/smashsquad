@@ -169,7 +169,7 @@ if (squash_timer <= 0) {
 
         var splat_particle = part_type_create();
         part_type_shape(splat_particle, pt_shape_circle);
-        part_type_size(splat_particle, 0.15, 0.25, -0.002, 0); // Dimensione sostanziale, shrink minimo
+        part_type_size(splat_particle, 0.13, 0.17, -0.0008, 0); // Range stretto, transizione graduale
 
         // ESTRAE il colore dominante dello sprite del bug
         var bug_color = c_white; // Default
