@@ -28,21 +28,22 @@ pulse_timer += pulse_speed;
 switch (phase) {
     case "expand":
         expand_timer++;
-        
-        // Espansione elastica (overshoot poi rimbalza)
+
+        // Espansione graduale: 0 → max_size → splatter_size (smooth)
         var t = expand_timer / expand_duration;
-        if (t < 0.5) {
-            // Prima metà: espande rapidamente
-            current_size = max_size * (t * 2);
+
+        if (t < 0.6) {
+            // Primi 60%: espande da 0 a max_size
+            current_size = max_size * (t / 0.6);
         } else {
-            // Seconda metà: rimbalza leggermente indietro
-            var bounce = 1 - (t - 0.5) * 2;
-            current_size = max_size * (1 - bounce * 0.2);
+            // Ultimi 40%: ritorna gradualmente da max_size a splatter_size
+            var return_progress = (t - 0.6) / 0.4;
+            current_size = max_size + (splatter_size - max_size) * return_progress;
         }
-        
+
         if (expand_timer >= expand_duration) {
             phase = "idle";
-            current_size = splatter_size;
+            current_size = splatter_size; // Già a questo valore, nessun salto
         }
         break;
         

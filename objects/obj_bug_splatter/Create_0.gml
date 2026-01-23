@@ -2,13 +2,13 @@
 
 // Proprietà splatter
 splatter_color = c_white; // Verrà impostato dal bug
-splatter_size = 50; // RIDOTTO da 80 a 50 (splatter iniziale più piccolo)
-max_size = splatter_size * 1.2; // RIDOTTO da 1.3 a 1.2
+splatter_size = 50; // Dimensione base
+max_size = splatter_size * 1.08; // Solo 8% più grande per transizione graduale
 
 // Animazione spawn (espande rapidamente poi si stabilizza)
 phase = "expand"; // "expand" → "idle" → "fade"
 expand_timer = 0;
-expand_duration = 15; // Frame di espansione
+expand_duration = 20; // Aumentato da 15 a 20 per espansione più lenta
 idle_timer = 0;
 idle_duration = game_get_speed(gamespeed_fps) * 3; // 3 secondi visibile
 fade_timer = 0;
