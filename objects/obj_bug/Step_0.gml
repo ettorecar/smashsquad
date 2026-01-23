@@ -169,7 +169,7 @@ if (squash_timer <= 0) {
 
         var splat_particle = part_type_create();
         part_type_shape(splat_particle, pt_shape_circle);
-        part_type_size(splat_particle, 0.35, 0.45, -0.004, 0); // MACCHIE GRANDI ~40px, shrink visibile
+        part_type_size(splat_particle, 0.42, 0.52, -0.003, 0); // Macchie più grandi ~50px, shrink lento
 
         // ESTRAE il colore dominante dello sprite del bug
         var bug_color = c_white; // Default
@@ -197,16 +197,16 @@ if (squash_timer <= 0) {
         }
 
         part_type_color1(splat_particle, bug_color);
-        part_type_alpha3(splat_particle, 0.75, 0.45, 0); // Fade più marcato
+        part_type_alpha3(splat_particle, 0.95, 0.7, 0); // MOLTO PIÙ OPACHE: 95% → 70% → 0%
         part_type_speed(splat_particle, 18, 35, -0.4, 0); // Veloci, frenano bruscamente
         part_type_direction(splat_particle, 0, 360, 0, 0);
         part_type_gravity(splat_particle, 0.08, 270); // Gravità leggermente maggiore
         part_type_life(splat_particle, 15, 22); // Vita più breve, sono già grandi e visibili
 
         // Più particelle per perfect tap!
-        var particle_count = 12; // Ridotto, sono più grandi
+        var particle_count = 14; // Aumentato per visibilità
         if (variable_instance_exists(id, "is_perfect") && is_perfect) {
-            particle_count = 18; // Perfect = più macchie
+            particle_count = 22; // Perfect = più macchie
         }
 
         // SPAWN SEPARATO: ogni particella parte da posizione offset per evitare sovrapposizione
