@@ -77,6 +77,13 @@ if (special_chance < 0.025 && !is_shielded) {
     can_be_killed = false;
     evasive_dodge_count = 0; // NUOVO: Conta le schivate
     evasive_max_dodges = 4;  // Dopo 4 schivate diventa normale
+
+    // FLIP 3D quando schiva
+    is_flipping = false;
+    flip_angle = 0;
+    flip_speed = 20; // Gradi per frame (rotazione veloce)
+    flip_duration = 18; // ~1 rotazione completa (360/20 = 18 frames)
+    flip_timer = 0;
 }
 
 
@@ -186,7 +193,14 @@ function destroy_bug() {
                     
                     // Cooldown schivata
                     dodge_cooldown = 10;
-					
+
+                    // AVVIA FLIP 3D
+                    if (variable_instance_exists(id, "is_flipping")) {
+                        is_flipping = true;
+                        flip_angle = 0;
+                        flip_timer = 0;
+                    }
+
 					// NUOVO: Conta schivate
                     evasive_dodge_count++;
                     

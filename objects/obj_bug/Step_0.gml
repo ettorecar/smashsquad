@@ -4,6 +4,22 @@ if (variable_global_exists("game_over_active") && global.game_over_active) {
     exit;
 }
 
+// FLIP 3D per bug evasivo quando schiva
+if (variable_instance_exists(id, "is_flipping") && is_flipping) {
+    flip_timer++;
+    flip_angle += flip_speed;
+
+    // Applica rotazione pseudo-3D
+    image_xscale = abs(cos(degtorad(flip_angle))) * original_xscale;
+
+    // Fine flip
+    if (flip_timer >= flip_duration) {
+        is_flipping = false;
+        flip_angle = 0;
+        image_xscale = original_xscale; // Ripristina scala normale
+    }
+}
+
 // NUOVO: Gestione mini-bug ESPLOSIVI del boss
 if (is_boss_minibug_explosive && !minibug_exploded) {
     explosive_minibug_timer--;
